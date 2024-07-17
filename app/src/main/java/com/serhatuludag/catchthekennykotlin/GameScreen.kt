@@ -57,12 +57,12 @@ class GameScreen : AppCompatActivity() {
         job = CoroutineScope(Dispatchers.Main).launch {
             while (time > 0) {
                 hideImages(ballArray)
-                delay(500) // Change ball every 0.5 second
+                delay(750) // Change ball every 0.75 second
             }
         }
     }
 
-    fun timer(){
+    internal fun timer(){
         startBallChanging()
         runnable = object : Runnable {
             override fun run() {
@@ -80,19 +80,19 @@ class GameScreen : AppCompatActivity() {
         }
         handler.post(runnable)
     }
-    fun startGame(){
+    internal fun startGame(){
         time = 16
         binding.timeText.text = "Time : $time"
         score = 0
         timer()
     }
 
-    fun restartAlert(){
+    private fun restartAlert(){
         //Alert and Ask user to restart the game when time is over
-
         val alert = AlertDialog.Builder(this)
-        alert.setTitle("Restart")
-        alert.setMessage("Dou you want to restart the game?")
+        alert.setCancelable(false)
+        alert.setTitle("Game Over")
+        alert.setMessage("Your Score: $score\nDo you want to restart the game?")
         alert.setPositiveButton("Yes",object : DialogInterface.OnClickListener{
             override fun onClick(p0: DialogInterface?, p1: Int) {
                 score=0
@@ -102,14 +102,12 @@ class GameScreen : AppCompatActivity() {
         })
         alert.setNegativeButton("No",object : DialogInterface.OnClickListener{
             override fun onClick(p0: DialogInterface?, p1: Int) {
-                Toast.makeText(this@GameScreen,"Game Over \n Your Score : $score",Toast.LENGTH_LONG).show()
-
+                finish()
             }
         })
         alert.show()
 
     }
-
 
 
 }

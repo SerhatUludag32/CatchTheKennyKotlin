@@ -24,6 +24,5 @@ class MainActivity : AppCompatActivity() {
     fun start(view: View){
         val intent = Intent(this, GameScreen::class.java)
         startActivity(intent)
-        finish()
     }
 }
