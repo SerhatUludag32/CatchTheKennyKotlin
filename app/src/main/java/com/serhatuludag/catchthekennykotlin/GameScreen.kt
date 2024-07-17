@@ -12,6 +12,7 @@ import com.serhatuludag.catchthekennykotlin.databinding.ActivityGameScreenBindin
 class GameScreen : AppCompatActivity() {
     private lateinit var binding: ActivityGameScreenBinding
     var score = 0
+    var time = 16
     var runnable : Runnable = Runnable {  }
     var handler : Handler = Handler(Looper.getMainLooper())
 
@@ -20,5 +21,18 @@ class GameScreen : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityGameScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        timer()
     }
+
+    fun timer(){
+        runnable = object : Runnable {
+            override fun run() {
+                time--
+                binding.timeText.text = "Time : $time"
+                handler.postDelayed(runnable, 1000)
+            }
+        }
+        handler.post(runnable)
+    }
+
 }
